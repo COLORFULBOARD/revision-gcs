@@ -20,7 +20,17 @@ setup(
         'revision',
         'google-cloud-storage==1.4.0'
     ],
+    extras_require={
+        'dev': [
+            'flake8==3.4.1',
+            'pytest==3.2.2'
+        ]
+    },
     classifiers=[
+        'Development Status :: 4 - Beta',
+        'Environment :: Web Environment',
+        'License :: OSI Approved :: MIT License',
+        'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
         'Programming Language :: Python :: 2.6',

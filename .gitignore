@@ -9,3 +9,5 @@ dist
 build
 .cache/
 .idea/
+
+tests/gcs_key_file.json

@@ -40,10 +40,16 @@ class GcsClient(Client):
             self.config.options.key_file
         ))
 
-        self.gcs_client = StorageClient.from_service_account_json(keyfile_path)
+        try:
+            self.gcs_client = StorageClient.\
+                from_service_account_json(keyfile_path)
+        except ValueError as e:
+            raise RuntimeError(e.message)
 
         try:
-            self.bucket = self.gcs_client.bucket(self.config.options.bucket_name)
+            self.bucket = self.gcs_client.bucket(
+                self.config.options.bucket_name
+            )
         except NotFound as e:
             raise RuntimeError(e.message)
 
