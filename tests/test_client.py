@@ -23,7 +23,7 @@ def test_config():
         "revision_file": "CHANGELOG.md",
         "options": {
             "key_file": "tests/gcs_key_file.json",
-            "bucket_name": "tokuda-sample-tensorflow-dataset"
+            "bucket_name": "YOUR_BUCKET_NAME"
         }
     }))
     assert client.config is not None
