@@ -16,11 +16,11 @@ from google.cloud.storage import Client as StorageClient
 from revision.client import Client
 
 __all__ = (
-    "GcsClient",
+    "GCSClient",
 )
 
 
-class GcsClient(Client):
+class GCSClient(Client):
 
     gcs_client = None
 
