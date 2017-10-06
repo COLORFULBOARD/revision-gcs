@@ -1,0 +1,18 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/revision_gcs
+    docker:
+      - image: circleci/python:2.7.13
+    steps:
+      - checkout
+      - run:
+          name: Install dependencies
+          command: sudo make install-dev
+      - run:
+          name: Run lint
+          command: make lint
+      - run:
+          name: Run test
+          command: make test
