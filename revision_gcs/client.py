@@ -3,6 +3,8 @@
     revision_gcs.client
     ~~~~~~~~~~~~~~~~~~~
 
+    Implements Google Cloud Storage support for Revision.
+
     :copyright: (c) 2017 by COLORFUL BOARD Inc.
     :license: MIT, see LICENSE for more details.
 """
@@ -35,10 +37,16 @@ class GCSClient(Client):
         return "gcs"
 
     def post_configure(self):
-        keyfile_path = os.path.normpath(os.path.join(
-            os.getcwd(),
-            self.config.options.key_file
-        ))
+        if os.path.isabs(self.config.options.key_file):
+            keyfile_path = self.config.options.key_file
+        else:
+            keyfile_path = os.path.normpath(os.path.join(
+                os.getcwd(),
+                self.config.options.key_file
+            ))
+
+        if not os.path.exists(keyfile_path):
+            raise RuntimeError("GCP key file does not exist.")
 
         try:
             self.gcs_client = StorageClient.\
@@ -57,7 +65,7 @@ class GCSClient(Client):
         blob = self.bucket.blob(self.filename)
 
         if not blob.exists():
-            raise RuntimeError("")
+            raise RuntimeError("The file to be downloaded does not exist.")
 
         #: download
 
@@ -78,6 +86,7 @@ class GCSClient(Client):
 
         #: zip
 
+        self.archiver.zip_path = self.tmp_file_path
         self.archiver.archive()
 
         #: upload
