@@ -15,6 +15,10 @@ with open('revision_gcs/__init__.py', 'rb') as f:
 setup(
     name='revision-gcs',
     version=version,
+    description='Google Cloud Storage for Revision',
+    author='COLORFUL BOARD Inc.',
+    url='https://github.com/COLORFULBOARD/revision-gcs',
+    license='MIT',
     packages=['revision_gcs'],
     install_requires=[
         'revision',
@@ -33,7 +37,7 @@ setup(
         'Operating System :: OS Independent',
         'Programming Language :: Python',
         'Programming Language :: Python :: 2',
-        'Programming Language :: Python :: 2.6',
-        'Programming Language :: Python :: 2.7'
+        'Programming Language :: Python :: 2.7',
+        'Topic :: Software Development :: Libraries :: Python Modules'
     ]
 )
