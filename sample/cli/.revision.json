@@ -1,0 +1,13 @@
+{
+  "clients": [
+    {
+      "key": "sample",
+      "module": "revision_gcs.GCSClient",
+      "dir_path": "data",
+      "options": {
+        "key_file": "gcs_key_file.json",
+        "bucket_name": "YOUR_BUCKET_NAME"
+      }
+    }
+  ]
+}
