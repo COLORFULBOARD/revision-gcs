@@ -62,7 +62,7 @@ class GCSClient(Client):
             bucket_name_items = self.config.options.bucket_name.split("/")
             bucket_name = bucket_name_items[0]
 
-            self.blob_path = bucket_name_items[1:].join("/")
+            self.blob_path = "/".join(bucket_name_items[1:])
             self.blob_path = os.path.normpath(
                 os.path.join(self.blob_path, self.filename)
             )
