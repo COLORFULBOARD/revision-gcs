@@ -59,10 +59,13 @@ class GCSClient(Client):
         bucket_name = ""
 
         if "/" in self.config.options.bucket_name:
-            bucket_name = self.config.options.bucket_name.split("/")[0]
+            bucket_name_items = self.config.options.bucket_name.split("/")
+            bucket_name = bucket_name_items[0]
 
-            self.blob_path = self.config.options.bucket_name.split("/")[1:].join("/")
-            self.blob_path = os.path.normpath(os.path.join(self.blob_path, self.filename))
+            self.blob_path = bucket_name_items[1:].join("/")
+            self.blob_path = os.path.normpath(
+                os.path.join(self.blob_path, self.filename)
+            )
         else:
             bucket_name = self.config.options.bucket_name
             self.blob_path = self.filename
