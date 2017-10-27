@@ -28,6 +28,8 @@ class GCSClient(Client):
 
     bucket = None
 
+    blob_path = ""
+
     @property
     def name(self):
         return "Google Cloud Storage"
@@ -54,15 +56,24 @@ class GCSClient(Client):
         except ValueError as e:
             raise RuntimeError(e.message)
 
+        bucket_name = ""
+
+        if "/" in self.config.options.bucket_name:
+            bucket_name = self.config.options.bucket_name.split("/")[0]
+
+            self.blob_path = self.config.options.bucket_name.split("/")[1:].join("/")
+            self.blob_path = os.path.normpath(os.path.join(self.blob_path, self.filename))
+        else:
+            bucket_name = self.config.options.bucket_name
+            self.blob_path = self.filename
+
         try:
-            self.bucket = self.gcs_client.bucket(
-                self.config.options.bucket_name
-            )
+            self.bucket = self.gcs_client.bucket(bucket_name)
         except NotFound as e:
             raise RuntimeError(e.message)
 
     def download(self):
-        blob = self.bucket.blob(self.filename)
+        blob = self.bucket.blob(self.blob_path)
 
         if not blob.exists():
             raise RuntimeError("The file to be downloaded does not exist.")
@@ -79,7 +90,7 @@ class GCSClient(Client):
         self.archiver.unarchive()
 
     def upload(self):
-        blob = self.bucket.blob(self.filename)
+        blob = self.bucket.blob(self.blob_path)
 
         if not blob.exists():
             self._upload_tmp_zip(blob)
