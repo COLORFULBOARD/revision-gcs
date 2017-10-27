@@ -75,7 +75,7 @@ class GCSClient(Client):
             raise RuntimeError(e.message)
 
     def download(self):
-        blob = self.bucket.blob(self.prefix + self.file_name)
+        blob = self.bucket.blob(self.prefix + self.filename)
 
         if not blob.exists():
             raise RuntimeError("The file to be downloaded does not exist.")
@@ -92,7 +92,7 @@ class GCSClient(Client):
         self.archiver.unarchive()
 
     def upload(self):
-        blob = self.bucket.blob(self.prefix + self.file_name)
+        blob = self.bucket.blob(self.prefix + self.filename)
 
         if not blob.exists():
             self._upload_tmp_zip(blob)
