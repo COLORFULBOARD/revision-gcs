@@ -28,7 +28,7 @@ class GCSClient(Client):
 
     bucket = None
 
-    blob_path = ""
+    prefix = ""
 
     @property
     def name(self):
@@ -62,13 +62,12 @@ class GCSClient(Client):
             bucket_name_items = self.config.options.bucket_name.split("/")
             bucket_name = bucket_name_items[0]
 
-            self.blob_path = "/".join(bucket_name_items[1:])
-            self.blob_path = os.path.normpath(
-                os.path.join(self.blob_path, self.filename)
+            self.prefix = "/".join(bucket_name_items[1:])
+            self.prefix = os.path.normpath(
+                os.path.join(self.prefix, self.filename)
             )
         else:
             bucket_name = self.config.options.bucket_name
-            self.blob_path = self.filename
 
         try:
             self.bucket = self.gcs_client.bucket(bucket_name)
@@ -76,7 +75,7 @@ class GCSClient(Client):
             raise RuntimeError(e.message)
 
     def download(self):
-        blob = self.bucket.blob(self.blob_path)
+        blob = self.bucket.blob(self.prefix + self.blob_path)
 
         if not blob.exists():
             raise RuntimeError("The file to be downloaded does not exist.")
@@ -93,7 +92,7 @@ class GCSClient(Client):
         self.archiver.unarchive()
 
     def upload(self):
-        blob = self.bucket.blob(self.blob_path)
+        blob = self.bucket.blob(self.prefix + self.blob_path)
 
         if not blob.exists():
             self._upload_tmp_zip(blob)
