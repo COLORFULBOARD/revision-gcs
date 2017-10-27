@@ -53,18 +53,34 @@ def test_config():
     client = GCSClient(Config({
         "key": "test_key",
         "module": "revision_gcs.GCSClient",
-        "dir_path": "data",
-        "revision_file": "CHANGELOG.md",
+        "local_path": "data",
+        "remote_path": "gs://YOUR_BUCKET_NAME",
         "options": {
-            "key_file": "tests/gcs_key_file.json",
-            "bucket_name": "YOUR_BUCKET_NAME"
+            "key_file": "tests/gcs_key_file.json"
         }
     }))
     assert client.config is not None
     assert client.config.key is "test_key"
     assert client.config.module is "revision_gcs.GCSClient"
-    assert client.config.dir_path is "data"
-    assert client.config.revision_file is "CHANGELOG.md"
+    assert client.config.local_path is "data"
+    assert client.config.remote_path is "CHANGELOG.md"
+
+def test_blob_path():
+    client = GCSClient()
+    assert client.config is None
+
+    client = GCSClient(Config({
+        "key": "test_key",
+        "module": "revision_gcs.GCSClient",
+        "dir_path": "data",
+        "local_path": "data",
+        "remote_path": "gs://YOUR_BUCKET_NAME/TO/BLOB",
+        "options": {
+            "key_file": "tests/gcs_key_file.json"
+        }
+    }))
+
+    assert client.prefix == "TO/BLOB"
 
 
 if __name__ == '__main__':

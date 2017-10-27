@@ -56,26 +56,22 @@ class GCSClient(Client):
         except ValueError as e:
             raise RuntimeError(e.message)
 
-        bucket_name = ""
+        bucket = ""
 
-        if "/" in self.config.options.bucket_name:
-            bucket_name_items = self.config.options.bucket_name.split("/")
-            bucket_name = bucket_name_items[0]
-
-            self.prefix = "/".join(bucket_name_items[1:])
-            self.prefix = os.path.normpath(
-                os.path.join(self.prefix, self.filename)
-            )
+        if "gs://" in self.config.remote_path:
+            bucket, prefix = self.config.remote_path[5:].split('/', 1)
+            self.prefix = prefix
         else:
-            bucket_name = self.config.options.bucket_name
+            bucket = self.config.options.bucket_name
 
         try:
-            self.bucket = self.gcs_client.bucket(bucket_name)
+            self.bucket = self.gcs_client.bucket(bucket)
         except NotFound as e:
             raise RuntimeError(e.message)
 
     def download(self):
-        blob = self.bucket.blob(self.prefix + self.filename)
+        blob_path = os.path.join(self.prefix, self.filename)
+        blob = self.bucket.blob(blob_path)
 
         if not blob.exists():
             raise RuntimeError("The file to be downloaded does not exist.")
@@ -92,7 +88,8 @@ class GCSClient(Client):
         self.archiver.unarchive()
 
     def upload(self):
-        blob = self.bucket.blob(self.prefix + self.filename)
+        blob_path = os.path.join(self.prefix, self.filename)
+        blob = self.bucket.blob(blob_path)
 
         if not blob.exists():
             self._upload_tmp_zip(blob)
@@ -114,8 +111,6 @@ class GCSClient(Client):
             method="PUT",
             file_path=self.tmp_file_path
         )
-
-        blob.make_public()
 
     def _upload_tmp_zip(self, blob):
         """
