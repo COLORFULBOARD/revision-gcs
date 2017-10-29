@@ -59,7 +59,13 @@ class GCSClient(Client):
         bucket = ""
 
         if "gs://" in self.config.remote_path:
-            bucket, prefix = self.config.remote_path[5:].split('/', 1)
+            path_items = self.config.remote_path[5:]
+
+            if "/" in path_items:
+                bucket, prefix = path_items.split('/', 1)
+            else:
+                bucket, prefix = path_items, ""
+
             self.prefix = prefix
         else:
             bucket = self.config.options.bucket_name

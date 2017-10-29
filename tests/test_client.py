@@ -53,8 +53,9 @@ def test_config():
     client = GCSClient(Config({
         "key": "test_key",
         "module": "revision_gcs.GCSClient",
-        "local_path": "data",
+        "local_path": "tests",
         "remote_path": "gs://YOUR_BUCKET_NAME",
+        "revision_file": "CHANGELOG.md",
         "options": {
             "key_file": "tests/gcs_key_file.json"
         }
@@ -62,8 +63,8 @@ def test_config():
     assert client.config is not None
     assert client.config.key is "test_key"
     assert client.config.module is "revision_gcs.GCSClient"
-    assert client.config.local_path is "data"
-    assert client.config.remote_path is "CHANGELOG.md"
+    assert client.config.local_path is "tests"
+    assert client.config.remote_path is "gs://YOUR_BUCKET_NAME"
 
 def test_blob_path():
     client = GCSClient()
@@ -72,9 +73,9 @@ def test_blob_path():
     client = GCSClient(Config({
         "key": "test_key",
         "module": "revision_gcs.GCSClient",
-        "dir_path": "data",
-        "local_path": "data",
+        "local_path": "tests",
         "remote_path": "gs://YOUR_BUCKET_NAME/TO/BLOB",
+        "revision_file": "CHANGELOG.md",
         "options": {
             "key_file": "tests/gcs_key_file.json"
         }
