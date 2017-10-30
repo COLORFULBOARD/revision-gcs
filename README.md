@@ -28,13 +28,13 @@ You must configure in `.revision.json` as follow:
 {
   "clients": [
     {
-      "key": "YOUR_KEY",
+      "key": "YOUR_KEY", // Dataset unique key
       "module": "revision_gcs.GCSClient",
-      "dir_path": "PATH/TO/DATASET_DIR",
+      "local_path": "PATH/TO/LOCAL_PATH",
+      "remote_path": "PATH/TO/REMOTE_STORAGE_PATH", // Required: Specify your storage bucket uri
       "revision_file": "CHANGELOG.md", // Optional: Default: CHANGELOG.md
       "options": {
-        "key_file": "PATH/TO/KEY_FILE", // Required: Specify the path for service account keyfile
-        "bucket_name": "YOUR_BUCKET_NAME" // Required: Specify your storage bucket
+        "key_file": "PATH/TO/KEY_FILE" // Required: Specify the path for service account keyfile
       }
     }
   ]
