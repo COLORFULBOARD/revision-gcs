@@ -82,6 +82,8 @@ class GCSClient(Client):
         if not blob.exists():
             raise RuntimeError("The file to be downloaded does not exist.")
 
+        blob.make_public()
+
         #: download
 
         self.transfer.download(
@@ -92,6 +94,9 @@ class GCSClient(Client):
         #: unzip
 
         self.archiver.unarchive()
+
+        blob.acl.all().revoke_read()
+        blob.acl.save(client=self.gcs_client)
 
     def upload(self):
         blob_path = os.path.join(self.prefix, self.filename)
