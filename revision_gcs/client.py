@@ -5,7 +5,7 @@
 
     Implements Google Cloud Storage support for Revision.
 
-    :copyright: (c) 2017 by COLORFUL BOARD Inc.
+    :copyright: (c) 2017 by Sensy Inc.
     :license: MIT, see LICENSE for more details.
 """
 
