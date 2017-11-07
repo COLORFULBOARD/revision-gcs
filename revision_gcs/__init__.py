@@ -3,7 +3,7 @@
     revision_gcs
     ~~~~~~~~~~~~
 
-    :copyright: (c) 2017 by Sensy Inc.
+    :copyright: (c) 2017 by SENSY Inc.
     :license: MIT, see LICENSE for more details.
 """
 

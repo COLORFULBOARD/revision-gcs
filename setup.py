@@ -16,7 +16,7 @@ setup(
     name='revision-gcs',
     version=version,
     description='Google Cloud Storage for Revision',
-    author='Sensy Inc.',
+    author='SENSY Inc.',
     url='https://github.com/COLORFULBOARD/revision-gcs',
     license='MIT',
     packages=['revision_gcs'],
