@@ -3,7 +3,7 @@
     {
       "key": "sample",
       "module": "revision_gcs.GCSClient",
-      "local_path": "data",
+      "local_path": "dataset",
       "remote_path": "gs://revision-sample",
       "options": {
         "key_file": "gcs_key_file.json"
