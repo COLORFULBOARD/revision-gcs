@@ -22,7 +22,7 @@ $ pip install revision-gcs
 
 ## Options
 
-You must configure in `.revision.json` as follow:
+You must configure in `.revision/config.json` as follow:
 
 ```javascript
 {
