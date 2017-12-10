@@ -22,12 +22,12 @@ setup(
     packages=['revision_gcs'],
     install_requires=[
         'revision',
-        'google-cloud-storage==1.4.0'
+        'google-cloud-storage==1.6.0'
     ],
     extras_require={
         'dev': [
-            'flake8==3.4.1',
-            'pytest==3.2.2'
+            'flake8==3.5.0',
+            'pytest==3.3.1'
         ]
     },
     classifiers=[
