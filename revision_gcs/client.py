@@ -30,6 +30,8 @@ class GCSClient(Client):
 
     prefix = ""
 
+    scheme = "gs://"
+
     @property
     def name(self):
         return "Google Cloud Storage"
@@ -58,8 +60,8 @@ class GCSClient(Client):
 
         bucket = ""
 
-        if "gs://" in self.config.remote_path:
-            path_items = self.config.remote_path[5:]
+        if self.scheme in self.config.remote_path:
+            path_items = self.config.remote_path[len(self.scheme):]
 
             if "/" in path_items:
                 bucket, prefix = path_items.split('/', 1)

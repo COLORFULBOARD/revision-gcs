@@ -3,10 +3,10 @@
     {
       "key": "sample",
       "module": "revision_gcs.GCSClient",
-      "dir_path": "data",
+      "local_path": "dataset",
+      "remote_path": "gs://revision-sample",
       "options": {
-        "key_file": "gcs_key_file.json",
-        "bucket_name": "YOUR_BUCKET_NAME"
+        "key_file": "gcs_key_file.json"
       }
     }
   ]
